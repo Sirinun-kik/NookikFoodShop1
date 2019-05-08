@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -98,6 +99,25 @@ public class RegisterFragment1 extends Fragment {
             myAlert.normalDialog("Non Choose Gender", "Please Choose Gender");
         } else {
 //            EveryThing OK
+
+            MyConstant myConstant = new MyConstant();
+
+            try {
+
+                AddUserThread addUserThread = new AddUserThread(getActivity());
+                addUserThread.execute(name, genderSting, user, password, myConstant.getUrlAddUser());
+
+                String response = addUserThread.get();
+                Log.d("8MayV1", "response =" + response);
+
+                if (Boolean.parseBoolean(response)) {
+                    getActivity().getSupportFragmentManager().popBackStack();
+
+                }
+
+            }catch (Exception e){
+                e.printStackTrace();
+            }
         }
 
     }
